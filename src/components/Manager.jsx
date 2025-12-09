@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from "react";
 
 const Manager = () => {
   const ref = useRef();
+  const passRef = useRef();
   const [form, setForm] = useState({ site: "", username: "", password: "" });
   const [passwordArray, setPasswordArray] = useState([]);
   useEffect(() => {
@@ -14,10 +15,13 @@ const Manager = () => {
   }, []);
 
   const showPassword = () => {
+    passRef.current.type='password';
     if (ref.current.src.includes("/icons/eye-off-fill.svg")) {
       ref.current.src = "/icons/eye-fill.svg";
+      passRef.current.type='password'
     } else {
       ref.current.src = "/icons/eye-off-fill.svg";
+      passRef.current.type='text'
     }
   };
   const savePassword = () => {
@@ -64,11 +68,12 @@ const Manager = () => {
             />
             <div className="relative">
               <input
+                ref={passRef}
                 value={form.password}
                 onChange={handleChange}
-                type="text"
+                type="password"
                 name="password"
-                className="rounded-full border border-[#3E8E7E] w-full py-1 p-4"
+                className="rounded-full border border-[#3E8E7E] w-full py-1 p-4 "
                 placeholder="Enter Password"
               />
               <span
