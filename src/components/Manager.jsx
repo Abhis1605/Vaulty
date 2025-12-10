@@ -1,4 +1,5 @@
 import React from "react";
+import 'remixicon/fonts/remixicon.css'
 import { useRef, useState, useEffect } from "react";
 
 const Manager = () => {
@@ -13,6 +14,12 @@ const Manager = () => {
       setPasswordArray(JSON.parse(passwords));
     }
   }, []);
+
+  const copyText = (text) => {
+    alert("copied to clipboard",text)
+      navigator.clipboard.writeText(text);
+      // console.log("Text copied to clipboard:", text);       
+  }
 
   const showPassword = () => {
     passRef.current.type='password';
@@ -116,9 +123,9 @@ const Manager = () => {
             <tbody className="bg-[#51e8b1a5]">
               {passwordArray.map((item,index)=>{
               return <tr key={index}>
-                <td className="text-center w-32 py-2 font-medium capitalize"><a href={item.site}target="_blank">{item.site}</a></td>
-                <td className="text-center w-32 py-2 font-medium capitalize">{item.username}</td >
-                <td className="text-center w-32 py-2 font-medium capitalize">{item.password}</td>
+                <td className="text-center w-32 py-2 font-medium capitalize "><a href={item.site}target="_blank">{item.site}</a><i onClick={()=>{copyText(item.site)}} className="ri-file-copy-fill pl-1 cursor-pointer icon-copy "></i></td>
+                <td className="text-center w-32 py-2 font-medium capitalize">{item.username}<i onClick={()=>{copyText(item.username)}} className="ri-file-copy-fill pl-1 cursor-pointer icon-copy"></i></td >
+                <td className="text-center w-32 py-2 font-medium capitalize">{item.password}<i onClick={()=>{copyText(item.password)}} className="ri-file-copy-fill pl-1 cursor-pointer icon-copy "></i></td>
               </tr>
               })}
             </tbody>
