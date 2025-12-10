@@ -1,5 +1,7 @@
 import React from "react";
-import 'remixicon/fonts/remixicon.css'
+import "remixicon/fonts/remixicon.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useRef, useState, useEffect } from "react";
 
 const Manager = () => {
@@ -16,19 +18,28 @@ const Manager = () => {
   }, []);
 
   const copyText = (text) => {
-    alert("copied to clipboard",text)
-      navigator.clipboard.writeText(text);
-      // console.log("Text copied to clipboard:", text);       
-  }
+    toast.success('Message is copied to clipboard!', {
+position: "top-right",
+autoClose: 2000,
+hideProgressBar: false,
+closeOnClick: false,
+pauseOnHover: true,
+draggable: true,
+progress: undefined,
+theme: "light",
+});
+    navigator.clipboard.writeText(text);
+    // console.log("Text copied to clipboard:", text);
+  };
 
   const showPassword = () => {
-    passRef.current.type='password';
+    passRef.current.type = "password";
     if (ref.current.src.includes("/icons/eye-off-fill.svg")) {
       ref.current.src = "/icons/eye-fill.svg";
-      passRef.current.type='password'
+      passRef.current.type = "password";
     } else {
       ref.current.src = "/icons/eye-off-fill.svg";
-      passRef.current.type='text'
+      passRef.current.type = "text";
     }
   };
   const savePassword = () => {
@@ -41,6 +52,19 @@ const Manager = () => {
   };
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
       <div className="absolute top-0 -z-10 h-full w-full bg-white">
         <div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div>
       </div>
@@ -112,24 +136,54 @@ const Manager = () => {
         <div className="passwords">
           <h2 className="font-bold text-2xl py-4">Your Passwords</h2>
           {passwordArray.length === 0 && <div> No Password to show </div>}
-          {passwordArray.length !=0 &&  <table className="table-auto w-full overflow-hidden rounded-md">
-            <thead className="bg-[#01796F] text-white">
-              <tr>
-                <th className="py-2">Site</th>
-                <th className="py-2">Username</th>
-                <th className="py-2">Password</th>
-              </tr>
-            </thead>
-            <tbody className="bg-[#51e8b1a5]">
-              {passwordArray.map((item,index)=>{
-              return <tr key={index}>
-                <td className="text-center w-32 py-2 font-medium capitalize "><a href={item.site}target="_blank">{item.site}</a><i onClick={()=>{copyText(item.site)}} className="ri-file-copy-fill pl-1 cursor-pointer icon-copy "></i></td>
-                <td className="text-center w-32 py-2 font-medium capitalize">{item.username}<i onClick={()=>{copyText(item.username)}} className="ri-file-copy-fill pl-1 cursor-pointer icon-copy"></i></td >
-                <td className="text-center w-32 py-2 font-medium capitalize">{item.password}<i onClick={()=>{copyText(item.password)}} className="ri-file-copy-fill pl-1 cursor-pointer icon-copy "></i></td>
-              </tr>
-              })}
-            </tbody>
-          </table>}
+          {passwordArray.length != 0 && (
+            <table className="table-auto w-full overflow-hidden rounded-md">
+              <thead className="bg-[#01796F] text-white">
+                <tr>
+                  <th className="py-2">Site</th>
+                  <th className="py-2">Username</th>
+                  <th className="py-2">Password</th>
+                </tr>
+              </thead>
+              <tbody className="bg-[#51e8b1a5]">
+                {passwordArray.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td className="text-center w-32 py-2 font-medium capitalize ">
+                        <a href={item.site} target="_blank">
+                          {item.site}
+                        </a>
+                        <i
+                          onClick={() => {
+                            copyText(item.site);
+                          }}
+                          className="ri-file-copy-fill pl-1 cursor-pointer icon-copy "
+                        ></i>
+                      </td>
+                      <td className="text-center w-32 py-2 font-medium capitalize">
+                        {item.username}
+                        <i
+                          onClick={() => {
+                            copyText(item.username);
+                          }}
+                          className="ri-file-copy-fill pl-1 cursor-pointer icon-copy"
+                        ></i>
+                      </td>
+                      <td className="text-center w-32 py-2 font-medium capitalize">
+                        {item.password}
+                        <i
+                          onClick={() => {
+                            copyText(item.password);
+                          }}
+                          className="ri-file-copy-fill pl-1 cursor-pointer icon-copy "
+                        ></i>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </>
