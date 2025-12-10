@@ -18,16 +18,16 @@ const Manager = () => {
   }, []);
 
   const copyText = (text) => {
-    toast.success('Message is copied to clipboard!', {
-position: "top-right",
-autoClose: 2000,
-hideProgressBar: false,
-closeOnClick: false,
-pauseOnHover: true,
-draggable: true,
-progress: undefined,
-theme: "light",
-});
+    toast.success("Message is copied to clipboard!", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
     navigator.clipboard.writeText(text);
     // console.log("Text copied to clipboard:", text);
   };
