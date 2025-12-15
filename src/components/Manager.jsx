@@ -105,7 +105,7 @@ const Manager = () => {
         <div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div>
       </div>
 
-      <div className=" myContainer">
+      <div className="myContainer">
         <h1 className="text-4xl text font-bold  text-center">
           <span className="text-green-400">&lt;</span>
           <span className="text-[#3E8E7E]">Vaulty/</span>
@@ -159,7 +159,7 @@ const Manager = () => {
           </div>
           <button
             onClick={savePassword}
-            className="flex justify-center items-center bg-green-400 w-fit rounded-full px-7 py-1 hover:bg-green-300 gap-1.5 font-medium border-2 border-green-700 "
+            className="flex justify-center items-center bg-green-400 w-fit rounded-full px-6 py-1 hover:bg-green-300 gap-1.5 font-medium border-2 border-green-700 "
           >
             <lord-icon
               className=""
@@ -170,16 +170,16 @@ const Manager = () => {
           </button>
         </div>
         <div className="passwords">
-          <h2 className="font-bold text-2xl py-4">Your Passwords</h2>
+          <h2 className="font-bold text-xl py-2">Your Passwords</h2>
           {passwordArray.length === 0 && <div> No Password to show </div>}
           {passwordArray.length != 0 && (
             <table className="table-auto w-full overflow-hidden rounded-md">
               <thead className="bg-[#01796F] text-white">
                 <tr>
-                  <th className="py-2">Site</th>
-                  <th className="py-2">Username</th>
-                  <th className="py-2">Password</th>
-                  <th className="py-2">Actions</th>
+                  <th className="py-1">Site</th>
+                  <th className="py-1">Username</th>
+                  <th className="py-1">Password</th>
+                  <th className="py-1">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-[#51e8b1a5]">
