@@ -2,6 +2,7 @@ import React from "react";
 import "remixicon/fonts/remixicon.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { v4 as uuidv4 } from 'uuid';
 import { useRef, useState, useEffect } from "react";
 
 const Manager = () => {
@@ -11,7 +12,6 @@ const Manager = () => {
   const [passwordArray, setPasswordArray] = useState([]);
   useEffect(() => {
     let passwords = localStorage.getItem("passwords");
-    let passwordArray;
     if (passwords) {
       setPasswordArray(JSON.parse(passwords));
     }
@@ -44,9 +44,25 @@ const Manager = () => {
   };
   const savePassword = () => {
     // console.log(form);
-    setPasswordArray([...passwordArray, form]);
-    localStorage.setItem("password", JSON.stringify([...passwordArray, form]));
+    setPasswordArray([...passwordArray, {...form, id: uuidv4()}]);
+    localStorage.setItem("password", JSON.stringify([...passwordArray, {...form, id: uuidv4()}]));
+    setForm({ site: "", username: "", password: "" });
   };
+
+  const deletePassword = (id) => {
+    console.log(`deleting password with using ${id}`,id)
+    let confirm = window.confirm("Are you sure you want to delete this password?")
+    if(confirm){
+    setPasswordArray(passwordArray.filter((items) => items.id !== id))
+  localStorage.setItem("passwords",JSON.stringify(passwordArray.filter((items) => items.id !== id)))
+    }
+  }
+
+  const editPassword = (id) => {
+    console.log(`editing password with using ${id}`,id)
+    setForm(passwordArray.filter(i=>i.id===id)[0])
+    setPasswordArray(passwordArray.filter(item=>item.id!==id))
+  }
   const handleChange = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
   };
@@ -123,14 +139,14 @@ const Manager = () => {
           </div>
           <button
             onClick={savePassword}
-            className="flex justify-center items-center bg-green-500 w-fit rounded-full px-4 py-1 hover:bg-green-300 gap-1.5 border-2 border-green-700 "
+            className="flex justify-center items-center bg-green-400 w-fit rounded-full px-7 py-1 hover:bg-green-300 gap-1.5 font-medium border-2 border-green-700 "
           >
             <lord-icon
               className=""
               src="https://cdn.lordicon.com/efxgwrkc.json"
               trigger="hover"
             ></lord-icon>
-            Add Password
+            Save
           </button>
         </div>
         <div className="passwords">
@@ -143,6 +159,7 @@ const Manager = () => {
                   <th className="py-2">Site</th>
                   <th className="py-2">Username</th>
                   <th className="py-2">Password</th>
+                  <th className="py-2">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-[#51e8b1a5]">
@@ -157,7 +174,7 @@ const Manager = () => {
                           onClick={() => {
                             copyText(item.site);
                           }}
-                          className="ri-file-copy-fill pl-1 cursor-pointer icon-copy "
+                          className="ri-file-copy-fill pl-1 cursor-pointer icon-copy text-[20px] items-center"
                         ></i>
                       </td>
                       <td className="text-center w-32 py-2 font-medium capitalize">
@@ -166,7 +183,7 @@ const Manager = () => {
                           onClick={() => {
                             copyText(item.username);
                           }}
-                          className="ri-file-copy-fill pl-1 cursor-pointer icon-copy"
+                          className="ri-file-copy-fill pl-1 cursor-pointer icon-copy text-[20px] items-center"
                         ></i>
                       </td>
                       <td className="text-center w-32 py-2 font-medium capitalize">
@@ -175,8 +192,12 @@ const Manager = () => {
                           onClick={() => {
                             copyText(item.password);
                           }}
-                          className="ri-file-copy-fill pl-1 cursor-pointer icon-copy "
+                          className="ri-file-copy-fill pl-1 cursor-pointer icon-copy text-[20px] items-center"
                         ></i>
+                      </td>
+                      <td className="text-center w-32 py-2 font-medium capitalize">
+                        <span onClick={() => deletePassword(item.id)}><i className="ri-delete-bin-6-fill  cursor-pointer text-[20px] pl-2"></i></span>
+                        <span onClick={() => editPassword(item.id)}><i className="ri-pencil-ai-fill cursor-pointer pl-2 text-[20px]"></i></span>
                       </td>
                     </tr>
                   );
